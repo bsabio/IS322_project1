@@ -1,0 +1,6 @@
+{
+    "ollama-autocoder.model": "deepseek-coder:1.3b",
+    "ollama-autocoder.enabled": true,
+    "ollama.autocomplete.model": "deepseek-coder:1.3b",
+    "ollama.autocomplete.enable": true
+}
