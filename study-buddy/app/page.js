@@ -84,7 +84,18 @@ export default function Home() {
   /* ── Render ───────────────────────────────────────────── */
   return (
     <div style={pageStyles.page}>
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 700px) {
+          .sb-columns { flex-direction: column !important; gap: 0 !important; }
+          .sb-left { position: static !important; top: 0 !important; width: 100% !important; }
+          .sb-right { min-width: 0 !important; width: 100% !important; }
+          .sb-mode-btn { font-size: 16px !important; padding: 14px 10px !important; }
+          .sb-generate-btn { font-size: 18px !important; padding: 18px 24px !important; }
+          .sb-card { padding: 16px !important; }
+          .sb-flashcard { min-height: 60px !important; padding: 10px !important; }
+        }
+      `}</style>
 
       {/* Header */}
       <header style={pageStyles.header}>
@@ -95,9 +106,9 @@ export default function Home() {
         </p>
       </header>
 
-      <div style={pageStyles.columns}>
+      <div className="sb-columns" style={pageStyles.columns}>
         {/* ─── Left Column ───────────────────────────────── */}
-        <section style={pageStyles.left}>
+        <section className="sb-left" style={pageStyles.left}>
           <label style={pageStyles.label}>Your Study Notes</label>
           <textarea
             style={pageStyles.textarea}
@@ -120,6 +131,7 @@ export default function Home() {
               <button
                 key={m.key}
                 onClick={() => setMode(m.key)}
+                className="sb-mode-btn"
                 style={{
                   ...pageStyles.modeBtn,
                   ...(mode === m.key ? pageStyles.modeBtnActive : {}),
@@ -134,6 +146,7 @@ export default function Home() {
           <button
             onClick={handleGenerate}
             disabled={tooShort || loading}
+            className="sb-generate-btn"
             style={{
               ...pageStyles.generateBtn,
               opacity: tooShort || loading ? 0.5 : 1,
@@ -145,7 +158,7 @@ export default function Home() {
         </section>
 
         {/* ─── Right Column ──────────────────────────────── */}
-        <section style={pageStyles.right}>
+        <section className="sb-right" style={pageStyles.right}>
           {/* Loading state */}
           {loading && (
             <div style={pageStyles.statusCard}>
@@ -158,7 +171,7 @@ export default function Home() {
 
           {/* Error state */}
           {error && (
-            <div style={{ ...pageStyles.card, borderLeft: "4px solid #e74c3c" }}>
+            <div className="sb-card" style={{ ...pageStyles.card, borderLeft: "4px solid #e74c3c" }}>
               <h3 style={{ color: "#e74c3c", marginTop: 0 }}>Error</h3>
               <p>{error}</p>
             </div>
@@ -174,13 +187,13 @@ export default function Home() {
               </div>
 
               {/* Summary */}
-              <div style={pageStyles.card}>
+              <div className="sb-card" style={pageStyles.card}>
                 <h3 style={pageStyles.cardTitle}>📝 Summary</h3>
                 <p style={pageStyles.cardText}>{result.summary}</p>
               </div>
 
               {/* Key Points */}
-              <div style={pageStyles.card}>
+              <div className="sb-card" style={pageStyles.card}>
                 <h3 style={pageStyles.cardTitle}>🔑 Key Points</h3>
                 <ul style={pageStyles.list}>
                   {result.key_points.map((pt, i) => (
@@ -192,7 +205,7 @@ export default function Home() {
               </div>
 
               {/* Quiz Questions */}
-              <div style={pageStyles.card}>
+              <div className="sb-card" style={pageStyles.card}>
                 <h3 style={pageStyles.cardTitle}>❓ Quiz Questions</h3>
                 {result.quiz_questions.map((qq, i) => (
                   <details key={i} style={pageStyles.details}>
@@ -207,7 +220,7 @@ export default function Home() {
               </div>
 
               {/* Flashcards */}
-              <div style={pageStyles.card}>
+              <div className="sb-card" style={pageStyles.card}>
                 <h3 style={pageStyles.cardTitle}>🃏 Flashcards</h3>
                 <div style={pageStyles.flashcardGrid}>
                   {result.flashcards.map((fc, i) => (
